@@ -2,5 +2,6 @@
 from TeslaPrediction import teslaPredict
 from BitcoinPrediction import btcPredict
 
-teslaPredict()
+##LSTM
+##teslaPredict()
 btcPredict()
