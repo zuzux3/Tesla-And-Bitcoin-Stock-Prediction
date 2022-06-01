@@ -32,3 +32,16 @@ def btcPredict():
 
         xTrain, yTrain = np.array(xTrain), np.array(yTrain)
         xTrain = np.reshape(xTrain, (xTrain.shape[0], xTrain.shape[1], 1))
+
+    model = Sequential()
+    model.add(LSTM(units=50, return_sequences=True, input_shape=(xTrain.shape[1], 1)))
+    model.add(Dropout(0.2))
+    model.add(LSTM(units=50,return_sequences=True))
+    model.add(Dropout(0.2))
+    model.add(LSTM(units=50,return_sequences=True))
+    model.add(Dropout(0.2))
+    model.add(LSTM(units=50))
+    model.add(Dropout(0.2))
+    model.add(Dense(units=1))
+    model.compile(optimizer='adam', loss='mean_squared_error')
+    model.fit(xTrain, yTrain, epochs=100, batch_size=32)
