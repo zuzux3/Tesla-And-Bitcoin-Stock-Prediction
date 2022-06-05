@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import MinMaxScaler
 ##keras
 from keras.models import Sequential
@@ -49,4 +50,28 @@ def btcPredict():
     model.compile(optimizer='adam', loss='mean_squared_error')
     model.fit(xTrain, yTrain, epochs=100, batch_size=32)
 
-    print("żapka")
+    btcTest = 'bitcointest.csv'
+    testData = pd.read_csv(btcTest, index_col='Date')
+    testData = testData[-20:]
+    realStockPrice = testData.iloc[:, 1:2].values
+
+    totalData = pd.concat((dataset['Open'], testData['Open']), axis = 0)
+    inputs = totalData[len(totalData) - len(testData) - 60:].values
+    inputs = inputs.reshape(-1, 1) 
+    inputs = scaler.transform(inputs)
+
+    for i in range (60, 76):
+        xTest.append(inputs[i-60:i, 0])
+    
+    xTest = np.array(xTest)
+    xTest = np.reshape(xTest, (xTest.shape[0], xTest.shape[1], 1))
+    predictedStockPrice = model.predict(xTest)
+    predictedStockPrice = scaler.inverse_transform(predictedStockPrice)
+
+    plt.plot(realStockPrice, color = 'Blue', label = "Bitcoin Stock Price")
+    plt.plot(predictedStockPrice, color='Red', label="Predicted Bitcoin Stock Price")
+    plt.title("Bitcoin Stock Price Prediction")
+    plt.xlabel('Time')
+    plt.ylabel('BTC Stock Price')
+    plt.legend()
+    plt.show()
