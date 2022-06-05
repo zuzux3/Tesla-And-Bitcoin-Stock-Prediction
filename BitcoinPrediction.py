@@ -1,9 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-from sklearn.metrics import accuracy_score
 from sklearn.preprocessing import MinMaxScaler
-##keras
 from keras.models import Sequential
 from keras.layers import LSTM
 from keras.layers import Dropout
@@ -17,18 +15,12 @@ def btcPredict():
     dataset = dataset.loc[:, dataset.columns!='SNo']
     trainingSet = dataset.iloc[:, 1:2].values
 
-    ##to delete before end
-    '''head = dataset.head()
-    print(head)'''
-    
-
     scaler = MinMaxScaler(feature_range=(0,1))
     trainingSetGetScaled = scaler.fit_transform(trainingSet)    
     
     xTrain = []
     yTrain = []
     xTest = []
-    yTest = []
 
     for i in range (60, 2991):
         xTrain.append(trainingSetGetScaled[i - 60:i , 0])
