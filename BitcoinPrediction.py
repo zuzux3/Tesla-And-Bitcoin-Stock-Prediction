@@ -10,13 +10,16 @@ from keras.layers import Dense
 
 def btcPredict():
     btc = 'bitcoin.csv'
-    dataset = pd.read_csv(btc)
-
+    dataset = pd.read_csv(btc, index_col='Date')
+    dataset = dataset.loc[:, dataset.columns!='Name']
+    dataset = dataset.loc[:, dataset.columns!='Symbol']
+    dataset = dataset.loc[:, dataset.columns!='SNo']
     trainingSet = dataset.iloc[:, 1:2].values
 
     ##to delete before end
     '''head = dataset.head()
     print(head)'''
+    
 
     scaler = MinMaxScaler(feature_range=(0,1))
     trainingSetGetScaled = scaler.fit_transform(trainingSet)    
@@ -30,8 +33,8 @@ def btcPredict():
         xTrain.append(trainingSetGetScaled[i - 60:i , 0])
         yTrain.append(trainingSetGetScaled[i, 0])
 
-        xTrain, yTrain = np.array(xTrain), np.array(yTrain)
-        xTrain = np.reshape(xTrain, (xTrain.shape[0], xTrain.shape[1], 1))
+    xTrain, yTrain = np.array(xTrain), np.array(yTrain)
+    xTrain = np.reshape(xTrain, (xTrain.shape[0], xTrain.shape[1], 1))
 
     model = Sequential()
     model.add(LSTM(units=50, return_sequences=True, input_shape=(xTrain.shape[1], 1)))
@@ -45,3 +48,5 @@ def btcPredict():
     model.add(Dense(units=1))
     model.compile(optimizer='adam', loss='mean_squared_error')
     model.fit(xTrain, yTrain, epochs=100, batch_size=32)
+
+    print("żapka")
