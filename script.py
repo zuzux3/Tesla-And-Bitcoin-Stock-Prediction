@@ -1,6 +1,5 @@
+import Bitcoin as btc
+import Tesla as tsl
 
-from TeslaPrediction import teslaPredict
-from BitcoinPrediction import btcPredict
-
-teslaPredict()
-btcPredict()
+btc.predict()
+tsl.predict()
