@@ -4,7 +4,6 @@ It is project for Artificial Science class made by: Paruyr Gevorgyan and Zuzanna
 <br />
 # Datasets used in the project:<br />
 <br />
-## Bitcoin
 Bitcoin Data:<br />
 https://www.kaggle.com/datasets/varpit94/bitcoin-data-updated-till-26jun2021<br />
 <br />
